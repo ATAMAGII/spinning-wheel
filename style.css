@@ -1,0 +1,173 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #0a0a0a;
+  background-image: 
+         radial-gradient(circle at 20% 50%, rgba(255, 0, 0, 0.1) 0%, transparent 50%),
+         radial-gradient(circle at 80% 50%, rgba(255, 0, 0, 0.1) 0%, transparent 50%);
+  overflow: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    odeg,
+    transparent,
+    transparent 2px, 
+    rgba(255, 0, 0, 0.03) 2px,
+    rgba(255, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  z-index: 1;
+}
+
+.wheel {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  filter: drop-shadow( 0 0 20px rgba(255, 0, 0, 0.5));
+}
+
+.arrow{
+  width: 0;
+  height: 0;
+  border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-right: 30px solid red;
+    position: absolute;
+    top: 185px;
+    right: 0px;
+    left: 400px;
+    transform: translateX(-50%);
+    z-index: 10;
+    filter: drop-shadow( 0 0 5px red);
+}
+
+.spin-btn{
+  padding: 15px 40px;
+  font-size: 24px;
+  background-color: #111;
+  color: red;
+  border: 2px solid red;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+  transition: all 0.5s ease;
+}
+
+.spin-btn:hover {
+  background-color: red;
+  color: black;
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.08);
+}
+
+.title {
+  color: red;
+  font-size: 48px;
+  letter-spacing: 10px;
+  text-shadow: 0 0 20px red;
+  margin-bottom: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  animation: flicker 3s infinite;
+}
+
+@keyframes flicker {
+  0% { opacity: 1;}
+  0% { opacity: 1;}
+  0% { opacity: 1;}
+  0% { opacity: 1;}
+  96% { opacity: 0.4;}
+  97% { opacity: 1;}
+  100% { opacity: 1;}
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup.active {
+    display: flex;
+}
+
+.popup-content {
+    background: #111;
+    border: 2px solid red;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(255, 0, 0, 0.8);
+    animation: popIn 0.3s ease;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.popup-title {
+    color: red;
+    font-size: 24px;
+    letter-spacing: 5px;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px red;
+}
+
+.popup-result {
+    color: white;
+    font-size: 64px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-shadow: 0 0 20px white;
+}
+
+.popup-btn {
+    padding: 15px 40px;
+    font-size: 18px;
+    background-color: #111;
+    color: red;
+    border: 2px solid red;
+    cursor: pointer;
+    letter-spacing: 3px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.popup-btn:hover {
+    background-color: red;
+    color: black;
+    box-shadow: 0 0 20px red;
+}

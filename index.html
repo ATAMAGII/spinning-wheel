@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>WHEEL OF DOOM</title>
+  <link rel="stylesheet" href="style.css">
+  <h1 class="title">WHEEL OF DOOM</h1>
+</head>
+
+<body>
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <h2 class="popup-title">YOU LANDED ON</h2>
+      <p class="popup-result" id="popupResult"></p>
+      <button class="popup-btn" id="popupClose">CONFIRM</button>
+    </div>
+  </div>
+  <canvas id="particles" style="position:fixed; top:0; left:0; z-index:0; pointer-events:none;"></canvas>
+  <div class="container">
+    <div class="wheel" id="wheel">
+      <div class="arrow"></div>
+      <canvas id="canvas" width="400" height="400"></canvas>
+    </div>
+    <button class="spin-btn" id="spinBtn">spin</button>
+  </div>
+  <script src="script.js"></script>
+</body>
+
+</html>
