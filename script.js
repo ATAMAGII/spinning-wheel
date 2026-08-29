@@ -6,20 +6,32 @@ const colors = ['#1a1a1a', '#2d2d2d', '#333333', '#111111', '#222222', '#0d0d0d'
 
 let currentAngle = 0;
 let isSpinning = false;
+let size = 400;
 
 function getSegments() {
     return ['$1,000,000', '¥1,000,000', '$50,000,000', '₦100,000,000', '$20,000', 'DEATH', '$25,000', 'Try-again'];
+}
+
+function resizeCanvas() {
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    size = rect.width;
+    canvas.width = size * dpr;
+    canvas.height = size * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    drawWheel();
 }
 
 function drawWheel() {
     const segments = getSegments();
     const numSegments = segments.length;
     const arcSize = (2 * Math.PI) / numSegments;
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
-    const radius = 190;
+    const centerX = size / 2;
+    const centerY = size / 2;
+    const radius = size * 0.46;
+    const fontSize = Math.max(10, size * 0.045);
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, size, size);
 
     segments.forEach((segment, i) => {
         const startAngle = currentAngle + i * arcSize;
@@ -39,23 +51,14 @@ function drawWheel() {
         ctx.rotate(startAngle + arcSize / 2);
         ctx.textAlign = 'right';
         ctx.fillStyle = 'white';
-        ctx.font = 'bold 18px Arial';
+        ctx.font = `bold ${fontSize}px Arial`;
         ctx.fillText(segment, radius - 10, 5);
         ctx.restore();
     });
 
-    // Draw center circle
     ctx.beginPath();
-    ctx.arc(centerX, centerY, 20, 0, 2 * Math.PI);
+    ctx.arc(centerX, centerY, size * 0.05, 0, 2 * Math.PI);
     ctx.fillStyle = 'white';
-    ctx.fill();
-
-    // Draw pointer
-    ctx.beginPath();
-    ctx.moveTo(centerX + radius + 10, centerY - 15);
-    ctx.lineTo(centerX + radius + 10, centerY + 15);
-    ctx.lineTo(centerX + radius + 40, centerY);
-    ctx.fillStyle = 'red';
     ctx.fill();
 }
 
@@ -89,12 +92,20 @@ function getResult() {
     const arcSize = (2 * Math.PI) / numSegments;
     const normalizedAngle = ((Math.PI * 2) - (currentAngle % (Math.PI * 2))) % (Math.PI * 2);
     const index = Math.floor(normalizedAngle / arcSize) % numSegments;
-    alert('🎉 You landed on: ' + segments[index]);
+
+    const popup = document.getElementById('popup');
+    const popupResult = document.getElementById('popupResult');
+    popupResult.textContent = segments[index];
+    popup.classList.add('active');
 }
 
-spinBtn.addEventListener('click', spin);
-drawWheel();
+document.getElementById('popupClose').addEventListener('click', () => {
+    document.getElementById('popup').classList.remove('active');
+});
 
+spinBtn.addEventListener('click', spin);
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
 
 const particleCanvas = document.getElementById('particles');
 const pCtx = particleCanvas.getContext('2d');
@@ -152,23 +163,6 @@ animateParticles();
 window.addEventListener('resize', () => {
     particleCanvas.width = window.innerWidth;
     particleCanvas.height = window.innerHeight;
-});
-
-function getResult() {
-    const segments = getSegments();
-    const numSegments = segments.length;
-    const arcSize = (2 * Math.PI) / numSegments;
-    const normalizedAngle = ((Math.PI * 2) - (currentAngle % (Math.PI * 2))) % (Math.PI * 2);
-    const index = Math.floor(normalizedAngle / arcSize) % numSegments;
-    
-    const popup = document.getElementById('popup');
-    const popupResult = document.getElementById('popupResult');
-    popupResult.textContent = segments[index];
-    popup.classList.add('active');
-}
-
-document.getElementById('popupClose').addEventListener('click', () => {
-    document.getElementById('popup').classList.remove('active');
 });
 
 const smokeParticles = [];
