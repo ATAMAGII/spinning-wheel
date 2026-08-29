@@ -3,7 +3,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 body{
   display: flex;
   flex-direction: column;
@@ -15,8 +14,8 @@ body{
          radial-gradient(circle at 20% 50%, rgba(255, 0, 0, 0.1) 0%, transparent 50%),
          radial-gradient(circle at 80% 50%, rgba(255, 0, 0, 0.1) 0%, transparent 50%);
   overflow: hidden;
+  padding: 20px;
 }
-
 body::before {
   content: "";
   position: fixed;
@@ -25,7 +24,7 @@ body::before {
   width: 100%;
   height: 100%;
   background: repeating-linear-gradient(
-    odeg,
+    0deg,
     transparent,
     transparent 2px, 
     rgba(255, 0, 0, 0.03) 2px,
@@ -34,7 +33,6 @@ body::before {
   pointer-events: none;
   z-index: 0;
 }
-
 .container{
   position: relative;
   display: flex;
@@ -43,32 +41,33 @@ body::before {
   gap: 20px;
   z-index: 1;
 }
-
 .wheel {
   position: relative;
-  width: 400px;
-  height: 400px;
+  width: min(400px, 90vw);
+  aspect-ratio: 1 / 1;
   filter: drop-shadow( 0 0 20px rgba(255, 0, 0, 0.5));
 }
-
+.wheel canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
 .arrow{
   width: 0;
   height: 0;
   border-top: 15px solid transparent;
-    border-bottom: 15px solid transparent;
-    border-right: 30px solid red;
-    position: absolute;
-    top: 185px;
-    right: 0px;
-    left: 400px;
-    transform: translateX(-50%);
-    z-index: 10;
-    filter: drop-shadow( 0 0 5px red);
+  border-bottom: 15px solid transparent;
+  border-right: 30px solid red;
+  position: absolute;
+  top: 50%;
+  right: -3%;
+  transform: translateY(-50%);
+  z-index: 10;
+  filter: drop-shadow( 0 0 5px red);
 }
-
 .spin-btn{
-  padding: 15px 40px;
-  font-size: 24px;
+  padding: clamp(10px, 3vw, 15px) clamp(24px, 8vw, 40px);
+  font-size: clamp(16px, 4vw, 24px);
   background-color: #111;
   color: red;
   border: 2px solid red;
@@ -80,33 +79,28 @@ body::before {
   box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
   transition: all 0.5s ease;
 }
-
 .spin-btn:hover {
   background-color: red;
   color: black;
   box-shadow: 0 0 30px rgba(255, 0, 0, 0.08);
 }
-
 .title {
   color: red;
-  font-size: 48px;
-  letter-spacing: 10px;
+  font-size: clamp(24px, 7vw, 48px);
+  letter-spacing: clamp(3px, 1.5vw, 10px);
   text-shadow: 0 0 20px red;
   margin-bottom: 20px;
+  text-align: center;
+  padding: 0 12px;
   font-family: Arial, Helvetica, sans-serif;
   animation: flicker 3s infinite;
 }
-
 @keyframes flicker {
-  0% { opacity: 1;}
-  0% { opacity: 1;}
-  0% { opacity: 1;}
   0% { opacity: 1;}
   96% { opacity: 0.4;}
   97% { opacity: 1;}
   100% { opacity: 1;}
 }
-
 .popup {
     display: none;
     position: fixed;
@@ -119,41 +113,37 @@ body::before {
     justify-content: center;
     align-items: center;
 }
-
 .popup.active {
     display: flex;
 }
-
 .popup-content {
     background: #111;
     border: 2px solid red;
-    padding: 40px;
+    padding: clamp(20px, 6vw, 40px);
+    max-width: 90vw;
     text-align: center;
     box-shadow: 0 0 40px rgba(255, 0, 0, 0.8);
     animation: popIn 0.3s ease;
 }
-
 @keyframes popIn {
     0% { transform: scale(0.5); opacity: 0; }
     100% { transform: scale(1); opacity: 1; }
 }
-
 .popup-title {
     color: red;
-    font-size: 24px;
+    font-size: clamp(18px, 4vw, 24px);
     letter-spacing: 5px;
     margin-bottom: 20px;
     text-shadow: 0 0 10px red;
 }
-
 .popup-result {
     color: white;
-    font-size: 64px;
+    font-size: clamp(32px, 10vw, 64px);
     font-weight: bold;
     margin-bottom: 30px;
     text-shadow: 0 0 20px white;
+    word-break: break-word;
 }
-
 .popup-btn {
     padding: 15px 40px;
     font-size: 18px;
@@ -165,7 +155,6 @@ body::before {
     font-weight: bold;
     transition: all 0.3s ease;
 }
-
 .popup-btn:hover {
     background-color: red;
     color: black;
